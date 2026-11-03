@@ -21,6 +21,9 @@ dist/
 # Secrets and local configuration
 .env
 .env.*
+.env~
+*~
+*.swp
 !.env.example
 utils/.env
 .streamlit/secrets.toml

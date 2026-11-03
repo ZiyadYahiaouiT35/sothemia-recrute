@@ -1,0 +1,50 @@
+================================================================================
+CHANGES & WORK LOG - SOTHEMA HR INTELLIGENCE ATS
+================================================================================
+
+Date: 2026-11-03
+Author: Ziyad Yahiaoui / AI Assistant
+
+--------------------------------------------------------------------------------
+1. APPLICATION STARTUP FIX (run_app.py)
+--------------------------------------------------------------------------------
+- Issue:
+  When executing `python run_app.py`, the process hung indefinitely before 
+  starting the Streamlit server.
+- Root Cause:
+  The legacy script attempted to run `setup_chromedriver.py` with stdout and 
+  stderr redirected to /dev/null. The script got blocked attempting to download 
+  and verify Google Chrome/Chromedriver binaries over the network.
+- Solution:
+  Removed the blocking `setup_chromedriver.py` call from `run_app.py`. Sothema 
+  HR Intelligence is an internal ATS application that does not use Selenium or 
+  Chromedriver (which were only part of the deprecated LinkedIn job scraper).
+- Outcome:
+  The application now starts immediately without blocking via:
+    $ .venv/bin/python run_app.py
+  or
+    $ .venv/bin/streamlit run app.py
+
+--------------------------------------------------------------------------------
+2. CHATBOT AGENT INTEGRATION PLANNING (CHATBOT_INTEGRATION_PLAN.md)
+--------------------------------------------------------------------------------
+- Added a comprehensive architectural blueprint and step-by-step roadmap for 
+  integrating the new "HR AI Copilot / Agent":
+  - Analyzed the local SQLite / hosted Supabase storage layer (ats_store.py).
+  - Designed the 4 core HR capabilities:
+    1. Recruitment pipeline status and activity overview.
+    2. Smart candidate search and filtering across the database.
+    3. Candidate side-by-side comparison for specific job criteria.
+    4. Custom interview guide generation (STAR method, competency questions, 
+       and CV gap analysis).
+  - Documented setup instructions for free LLM providers (Groq Cloud and Google 
+    AI Studio Gemini) with native tool/function calling support.
+  - Outlined phased development with unit-test verification at each step.
+
+--------------------------------------------------------------------------------
+3. SECURITY & CLEANUP (.gitignore)
+--------------------------------------------------------------------------------
+- Cleaned up editor backup files (utils/.env~).
+- Updated .gitignore to ensure editor backup files (*~) are excluded to prevent 
+  accidental credential leakage.
+================================================================================
