@@ -76,3 +76,7 @@ poppler.zip
 poppler/
 chromedriver
 chromedriver.exe
+
+# Local checkpoints and notes
+CHECKPOINT*
+checkpoint*
